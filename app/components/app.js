@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Navigation from './navigation';
+
 class App extends Component {
 
     constructor() {
@@ -7,6 +9,8 @@ class App extends Component {
         this.state = {
             title: '',
             description: '',
+            responsible: '',
+            priority: '',
             _id: '',
             tasks: []
         }
@@ -112,11 +116,7 @@ class App extends Component {
         return(
             <div>
                 {/* Navigation */}
-                <nav className="light-blue darken-4">
-                    <div className="container">
-                        <a className="brand-logo" href="/">Go Root!</a>
-                    </div>
-                </nav>
+                <Navigation ntasks={ this.state.tasks.length } />
                 <div className="container">
                     <div className="row">
                         <div className="col s5">
