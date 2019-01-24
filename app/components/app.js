@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
 
 import Navigation from './navigation';
+import TaskForm from './taskForm';
 
 class App extends Component {
 
     constructor() {
         super();
         this.state = {
-            title: '',
-            description: '',
-            responsible: '',
-            priority: '',
-            _id: '',
-            tasks: []
+            tasks: [],
+            task: null
         }
-        this.addTask = this.addTask.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.saveTask = this.saveTask.bind(this);
     }
 
-    addTask(e) {
-        if(this.state._id) {                
-            fetch(`/api/task/${this.state._id}`, {
+    saveTask(task) {
+        if(task._id) {                
+            fetch(`/api/task/${task._id}`, {
                 method: 'PUT',
-                body: JSON.stringify(this.state),
+                body: JSON.stringify(task),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -32,7 +28,7 @@ class App extends Component {
             .then(data => {
                 console.log(data);
                 M.toast({html: 'Task Updated!'});
-                this.setState({ title: '', description: '', _id: '' });
+                this.setState({ task: null });
                 this.fetchTasks();
             })
             .catch(err => console.error(err));
@@ -40,7 +36,7 @@ class App extends Component {
         else {                
             fetch('/api/task', {
                 method: 'POST',
-                body: JSON.stringify(this.state),
+                body: JSON.stringify(task),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -50,13 +46,11 @@ class App extends Component {
             .then(data => {
                 console.log(data);
                 M.toast({html: 'Task Saved!'});
-                this.setState({ title: '', description: '' });
+                this.setState({ task: null });
                 this.fetchTasks();
             })
             .catch(err => console.error(err));
         }
-
-        e.preventDefault();
     }
 
     componentDidMount() {
@@ -78,12 +72,8 @@ class App extends Component {
         .then(data => {
             console.log(data);
             this.setState({
-                title: data.title,
-                description: data.description,
-                _id: data._id
+                task: data
             })
-            //M.toast({html: 'Task Deleted!'});
-            //this.fetchTasks();
         });
     }
     
@@ -105,13 +95,6 @@ class App extends Component {
         }
     }
 
-    handleChange(e) {
-        const { name, value} = e.target;
-        this.setState({
-            [name]: value
-        });
-    }
-
     render() {
         return(
             <div>
@@ -120,32 +103,16 @@ class App extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col s5">
-                            <div className="card">
-                                <div className="card-content">
-                                    <form onSubmit={this.addTask}>
-                                        <div className="row">
-                                            <div className="input-field col s12">
-                                                <input type="text" name="title" onChange={this.handleChange} placeholder="Task Title" value={this.state.title} />
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="input-field col s12">
-                                                <textarea name="description" onChange={this.handleChange} placeholder="Task Description" value={this.state.description} className="materialize-textarea"></textarea>
-                                            </div>
-                                        </div>
-                                        <button type="submit" className="btn light-blue darken-4">
-                                            Send
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                            <TaskForm task={ this.state.task } onSaveTask={ this.saveTask } />
                         </div>
                         <div className="col s7">
                             <table>
                                 <thead>
                                     <tr>
                                         <th>Title</th>
-                                        <th>Descripcion</th>
+                                        <th>Description</th>
+                                        <th>Responsible</th>
+                                        <th>Priority</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -155,6 +122,8 @@ class App extends Component {
                                                 <tr key={task._id}>
                                                     <td>{task.title}</td>
                                                     <td>{task.description}</td>
+                                                    <td>{task.responsible}</td>
+                                                    <td>{task.priority}</td>
                                                     <td>
                                                         <button onClick={() => this.editTask(task._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
                                                             <i className="material-icons">edit</i>
