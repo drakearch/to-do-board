@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Navigation from './Navigation';
 import TodoForm from './TodoForm';
+import TodoCard from './TodoCard';
 
 class App extends Component {
 
@@ -119,20 +120,7 @@ class App extends Component {
                                     {
                                         this.state.todos.map(todo => {
                                             return(
-                                                <tr key={todo._id}>
-                                                    <td>{todo.title}</td>
-                                                    <td>{todo.description}</td>
-                                                    <td>{todo.responsible}</td>
-                                                    <td>{todo.priority}</td>
-                                                    <td>
-                                                        <button onClick={() => this.editTodo(todo._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
-                                                            <i className="material-icons">edit</i>
-                                                        </button>
-                                                        <button onClick={() => this.deleteTodo(todo._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
-                                                            <i className="material-icons">delete</i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                <TodoCard todo={ todo } key={ todo._id }/>
                                             )
                                         })
                                     }
