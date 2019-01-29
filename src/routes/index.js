@@ -2,35 +2,35 @@ const express = require('express');
 const router = express.Router();
 
 const database = require('../database')
-const Task = require('../database/schemas/task');
+const Todo = require('../database/schemas/todo');
 
-router.get('/task', async(req, res) => {
-    const tasks = await Task.find();
-    res.json(tasks);
+router.get('/todo', async(req, res) => {
+    const todos = await Todo.find();
+    res.json(todos);
 });
 
-router.get('/task/:id', async(req, res) => {
-    const task = await Task.findById(req.params.id);
-    res.json(task);
+router.get('/todo/:id', async(req, res) => {
+    const todo = await Todo.findById(req.params.id);
+    res.json(todo);
 });
 
-router.post('/task', async(req, res) => {
+router.post('/todo', async(req, res) => {
     const { title, description, responsible, priority } = req.body;
-    const task = new Task({ title, description, responsible, priority });
-    await task.save();
-    res.json(task);
+    const todo = new Todo({ title, description, responsible, priority });
+    await todo.save();
+    res.json(todo);
 });
 
-router.put('/task/:id', async(req, res) => {
+router.put('/todo/:id', async(req, res) => {
     const { title, description, responsible, priority } = req.body;
-    const task = { title, description, responsible, priority };
-    await Task.findByIdAndUpdate(req.params.id, task);
-    const updated_task = await Task.findById(req.params.id);
-    res.json(updated_task);
+    const todo = { title, description, responsible, priority };
+    await Todo.findByIdAndUpdate(req.params.id, todo);
+    const updated_todo = await Todo.findById(req.params.id);
+    res.json(updated_todo);
 });
 
-router.delete('/task/:id', async(req, res) => {
-    await Task.findByIdAndDelete(req.params.id);
+router.delete('/todo/:id', async(req, res) => {
+    await Todo.findByIdAndDelete(req.params.id);
     res.json({deleted: true});
 });
 

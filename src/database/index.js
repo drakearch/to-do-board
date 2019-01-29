@@ -18,6 +18,6 @@ Mongoose.Promise = global.Promise;
 
 module.exports = { Mongoose,
     models: {
-        task: require('./schemas/task.js')
+        todo: require('./schemas/todo.js')
     }
 };
