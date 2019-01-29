@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 
-import Navigation from './navigation';
-import TaskForm from './taskForm';
+import Navigation from './Navigation';
+import TodoForm from './TodoForm';
 
 class App extends Component {
 
     constructor() {
         super();
         this.state = {
-            tasks: [],
-            task: null
+            todos: [],
+            todo: null
         }
-        this.saveTask = this.saveTask.bind(this);
+        this.saveTodo = this.saveTodo.bind(this);
     }
 
-    saveTask(task) {
-        if(task._id) {                
-            fetch(`/api/task/${task._id}`, {
+    saveTodo(todo) {
+        if(todo._id) {                
+            fetch(`/api/todo/${todo._id}`, {
                 method: 'PUT',
-                body: JSON.stringify(task),
+                body: JSON.stringify(todo),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -27,16 +27,16 @@ class App extends Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                M.toast({html: 'Task Updated!'});
-                this.setState({ task: null });
-                this.fetchTasks();
+                M.toast({html: 'Todo Updated!'});
+                this.setState({ todo: null });
+                this.fetchTodos();
             })
             .catch(err => console.error(err));
         }
         else {                
-            fetch('/api/task', {
+            fetch('/api/todo', {
                 method: 'POST',
-                body: JSON.stringify(task),
+                body: JSON.stringify(todo),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -45,41 +45,41 @@ class App extends Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                M.toast({html: 'Task Saved!'});
-                this.setState({ task: null });
-                this.fetchTasks();
+                M.toast({html: 'Todo Saved!'});
+                this.setState({ todo: null });
+                this.fetchTodos();
             })
             .catch(err => console.error(err));
         }
     }
 
     componentDidMount() {
-        this.fetchTasks();
+        this.fetchTodos();
     }
 
-    fetchTasks() {
-        fetch('/api/task')
+    fetchTodos() {
+        fetch('/api/todo')
         .then(res => res.json())
         .then(data => {
-            this.setState({tasks: data});
-            console.log(this.state.tasks);
+            this.setState({todos: data});
+            console.log(this.state.todos);
         });
     }
 
-    editTask(id) {
-        fetch(`/api/task/${id}`)
+    editTodo(id) {
+        fetch(`/api/todo/${id}`)
         .then(res => res.json())
         .then(data => {
             console.log(data);
             this.setState({
-                task: data
+                todo: data
             })
         });
     }
     
-    deleteTask(id) {
+    deleteTodo(id) {
         if(confirm('Are you sure you want to delete it?')) {
-            fetch(`/api/task/${id}`, {
+            fetch(`/api/todo/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
@@ -89,8 +89,8 @@ class App extends Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                M.toast({html: 'Task Deleted!'});
-                this.fetchTasks();
+                M.toast({html: 'Todo Deleted!'});
+                this.fetchTodos();
             });
         }
     }
@@ -99,11 +99,11 @@ class App extends Component {
         return(
             <div>
                 {/* Navigation */}
-                <Navigation ntasks={ this.state.tasks.length } />
+                <Navigation ntodos={ this.state.todos.length } />
                 <div className="container">
                     <div className="row">
                         <div className="col s5">
-                            <TaskForm task={ this.state.task } onSaveTask={ this.saveTask } />
+                            <TodoForm todo={ this.state.todo } onSaveTodo={ this.saveTodo } />
                         </div>
                         <div className="col s7">
                             <table>
@@ -117,18 +117,18 @@ class App extends Component {
                                 </thead>
                                 <tbody>
                                     {
-                                        this.state.tasks.map(task => {
+                                        this.state.todos.map(todo => {
                                             return(
-                                                <tr key={task._id}>
-                                                    <td>{task.title}</td>
-                                                    <td>{task.description}</td>
-                                                    <td>{task.responsible}</td>
-                                                    <td>{task.priority}</td>
+                                                <tr key={todo._id}>
+                                                    <td>{todo.title}</td>
+                                                    <td>{todo.description}</td>
+                                                    <td>{todo.responsible}</td>
+                                                    <td>{todo.priority}</td>
                                                     <td>
-                                                        <button onClick={() => this.editTask(task._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
+                                                        <button onClick={() => this.editTodo(todo._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
                                                             <i className="material-icons">edit</i>
                                                         </button>
-                                                        <button onClick={() => this.deleteTask(task._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
+                                                        <button onClick={() => this.deleteTodo(todo._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
                                                             <i className="material-icons">delete</i>
                                                         </button>
                                                     </td>

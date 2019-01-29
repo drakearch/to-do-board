@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class TaskForm extends Component {
+class TodoForm extends Component {
     constructor() {
         super();
 
@@ -20,19 +20,19 @@ class TaskForm extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.task !== null) {
-            if(this.props.task !== prevProps.task) {
+        if(this.props.todo !== null) {
+            if(this.props.todo !== prevProps.todo) {
                 this.setState({
-                    _id: this.props.task._id,
-                    title: this.props.task.title,
-                    description: this.props.task.description,
-                    responsible: this.props.task.responsible,
-                    priority: this.props.task.priority
+                    _id: this.props.todo._id,
+                    title: this.props.todo.title,
+                    description: this.props.todo.description,
+                    responsible: this.props.todo.responsible,
+                    priority: this.props.todo.priority
                 });
             }
         }
         else {
-            if(this.props.task !== prevProps.task) {
+            if(this.props.todo !== prevProps.todo) {
                 this.setState({
                     _id: '',
                     title: '',
@@ -54,7 +54,7 @@ class TaskForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.onSaveTask(this.state);
+        this.props.onSaveTodo(this.state);
         console.log(this.state);
         console.log('Sending data...');
     }
@@ -103,7 +103,7 @@ class TaskForm extends Component {
                             <div className="input-field col s12">
                                 <textarea 
                                     name="description"
-                                    placeholder="Task description"
+                                    placeholder="Todo description"
                                     className="materialize-textarea"
                                     value={this.state.description}
                                     onChange={this.handleChange}
@@ -120,4 +120,4 @@ class TaskForm extends Component {
     }
 }
 
-export default TaskForm;
+export default TodoForm;

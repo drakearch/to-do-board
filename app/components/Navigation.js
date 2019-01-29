@@ -5,9 +5,9 @@ class Navigation extends Component {
         return(
             <nav className="light-blue darken-4">
                 <div className="container nav-wrapper">
-                    <a href="" className="brand-logo">Tasks
+                    <a href="" className="brand-logo">Todos
                         <span className="new badge red" data-badge-caption="">
-                            { this.props.ntasks }
+                            { this.props.ntodos }
                         </span>
                     </a>
                 </div>
