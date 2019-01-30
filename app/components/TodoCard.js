@@ -10,8 +10,7 @@ class TodoCard extends Component {
 
 	handleEdit(e) {
 		e.preventDefault();
-		this.props.onEditTodo(this.props.todo._id);
-		console.log('Id', this.props.todo._id);
+		this.props.onEditTodo(this.props.todo);
 	}
 
 	handleDelete(e) {
@@ -19,8 +18,8 @@ class TodoCard extends Component {
 		this.props.onDeleteTodo(this.props.todo._id);
 	}
 
-  render() {
-		
+	render() {
+			
 		let priority;
 		if(this.props.todo.priority === 'high') {
 			priority = <div className="chip red white-text">{ this.props.todo.priority }</div>
@@ -34,9 +33,9 @@ class TodoCard extends Component {
 			}
 		}
 
-    return (
-      <div className="col s12 m12 l6">
-        <div className="card">
+		return (
+			<div className="col s12 m12 l6">
+				<div className="card">
 					<div className="card-content indigo darken-4 white-text center-align">
 						<span className="card-title">{ this.props.todo.title }</span>
 						{ priority }
@@ -53,25 +52,9 @@ class TodoCard extends Component {
 						</button>
 					</div>
 				</div>
-
-					{/*
-					<tr key={todo._id}>
-							<td>{todo.title}</td>
-							<td>{todo.description}</td>
-							<td>{todo.responsible}</td>
-							<td>{todo.priority}</td>
-							<td>
-									<button onClick={() => this.editTodo(todo._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
-											<i className="material-icons">edit</i>
-									</button>
-									<button onClick={() => this.deleteTodo(todo._id)} className="btn light-blue darken-4" style={{margin: '4px'}}>
-											<i className="material-icons">delete</i>
-									</button>
-							</td>
-					</tr> */}
-      </div>
-    )
-  }
+			</div>
+		)
+	}
 }
 
 export default TodoCard
