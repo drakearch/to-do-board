@@ -37,7 +37,7 @@ class TodoCard extends Component {
     return (
       <div className="col s12 m12 l6">
         <div className="card">
-					<div className="card-content indigo darken-1 white-text center-align">
+					<div className="card-content indigo darken-4 white-text center-align">
 						<span className="card-title">{ this.props.todo.title }</span>
 						{ priority }
 					</div>

@@ -110,9 +110,14 @@ class TodoForm extends Component {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="btn light-blue darken-4">
-                            Send
-                        </button>
+                        <div className="right-align">
+                            <button className="btn-floating red" style={{margin: '0 5px'}}>
+                                <i className="material-icons">clear</i>
+                            </button>
+                            <button type="submit" className="btn-floating indigo" style={{margin: '0 5px'}}>
+                                <i className="material-icons">send</i>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
