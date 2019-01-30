@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Navigation from './Navigation';
 import TodoForm from './TodoForm';
@@ -18,36 +19,18 @@ class App extends Component {
     }
 
     saveTodo(todo) {
-        if(todo._id) {                
-            fetch(`/api/todo/${todo._id}`, {
-                method: 'PUT',
-                body: JSON.stringify(todo),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
+        if(todo._id) {       
+            axios.put(`/api/todo/${todo._id}`, todo)
+            .then(res => {
                 M.toast({html: 'Todo Updated!'});
                 this.setState({ todo: null });
                 this.fetchTodos();
             })
             .catch(err => console.error(err));
         }
-        else {                
-            fetch('/api/todo', {
-                method: 'POST',
-                body: JSON.stringify(todo),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
+        else {           
+            axios.post('/api/todo', todo)
+            .then(res => {
                 M.toast({html: 'Todo Saved!'});
                 this.setState({ todo: null });
                 this.fetchTodos();
@@ -61,40 +44,26 @@ class App extends Component {
     }
 
     fetchTodos() {
-        fetch('/api/todo')
-        .then(res => res.json())
-        .then(data => {
-            this.setState({todos: data});
-            console.log(this.state.todos);
-        });
+        axios.get('/api/todo')
+        .then(res => {
+            this.setState({ todos: res.data })
+        })
     }
 
     editTodo(id) {
-        fetch(`/api/todo/${id}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            this.setState({
-                todo: data
-            })
-        });
+        axios.get(`/api/todo/${id}`)
+        .then(res => {
+            this.setState({ todo: res.data })
+        })
     }
     
     deleteTodo(id) {
         if(confirm('Are you sure you want to delete it?')) {
-            fetch(`/api/todo/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
+            axios.delete(`/api/todo/${id}`)
+            .then(res => {
                 M.toast({html: 'Todo Deleted!'});
-                this.fetchTodos();
-            });
+                this.fetchTodos()
+            })
         }
     }
 
