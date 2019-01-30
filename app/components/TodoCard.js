@@ -10,8 +10,7 @@ class TodoCard extends Component {
 
 	handleEdit(e) {
 		e.preventDefault();
-		this.props.onEditTodo(this.props.todo._id);
-		console.log('Id', this.props.todo._id);
+		this.props.onEditTodo(this.props.todo);
 	}
 
 	handleDelete(e) {
