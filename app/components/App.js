@@ -13,6 +13,8 @@ class App extends Component {
             todo: null
         }
         this.saveTodo = this.saveTodo.bind(this);
+        this.editTodo = this.editTodo.bind(this);
+        this.deleteTodo = this.deleteTodo.bind(this);
     }
 
     saveTodo(todo) {
@@ -103,29 +105,23 @@ class App extends Component {
                 <Navigation ntodos={ this.state.todos.length } />
                 <div className="container">
                     <div className="row">
-                        <div className="col s5">
+                        <div className="col s12 m6 l4">
                             <TodoForm todo={ this.state.todo } onSaveTodo={ this.saveTodo } />
                         </div>
-                        <div className="col s7">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Responsible</th>
-                                        <th>Priority</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        this.state.todos.map(todo => {
-                                            return(
-                                                <TodoCard todo={ todo } key={ todo._id }/>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>
+                        <div className="col s12 m6 l8">
+                            <div className="row">
+                                {
+                                    this.state.todos.map(todo => {
+                                        return(
+                                            <TodoCard 
+                                                todo={ todo } 
+                                                key={ todo._id } 
+                                                onEditTodo={ this.editTodo }
+                                                onDeleteTodo= { this.deleteTodo } />
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
