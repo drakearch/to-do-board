@@ -5,6 +5,7 @@ import Navigation from './components/Navigation';
 import TodoForm from './components/TodoForm';
 import TodoCard from './components/TodoCard';
 import store from './store';
+import { setTodo, setTodos } from './actionCreators'
 
 class App extends Component {
 
@@ -62,18 +63,12 @@ class App extends Component {
     fetchTodos() {
         axios.get('/api/todo')
         .then(res => {
-            store.dispatch({
-                type: "SET_TODOS",
-                todos: res.data
-            })
+            store.dispatch(setTodos(res.data))
         })
     }
 
     editTodo(todo) {
-        store.dispatch({
-            type: "SET_TODO",
-            todo
-        })
+        store.dispatch(setTodo(todo))
     }
     
     deleteTodo(id) {
