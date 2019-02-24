@@ -19,6 +19,7 @@
     "morgan": "^1.9.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-redux": "^6.0.1",
     "redux": "^4.0.1"
   },
   "devDependencies": {
