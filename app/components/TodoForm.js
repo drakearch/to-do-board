@@ -66,7 +66,7 @@ class TodoForm extends Component {
         return(
             <div className="card">
                 <div className="card-content">
-                    <span className="card-title">{ this.state.todo._id ? 'Edit Todo' : 'New Todo' }</span>
+                    <span className="card-title">{ this.state.todo._id ? 'Edit To-Do' : 'New To-Do' }</span>
                     <form onSubmit={this.handleSubmit}>
                         <div className="row">
                             <div className="input-field col s12">
@@ -115,10 +115,10 @@ class TodoForm extends Component {
                             </div>
                         </div>
                         <div className="right-align">
-                            <button onClick={this.clearState} className="btn-floating red" style={{margin: '0 5px'}}>
+                            <button onClick={this.clearState} className="btn-floating red darken-2" style={{margin: '0 5px'}}>
                                 <i className="material-icons">clear</i>
                             </button>
-                            <button type="submit" className="btn-floating indigo" style={{margin: '0 5px'}}>
+                            <button type="submit" className="btn-floating indigo darken-2" style={{margin: '0 5px'}}>
                                 <i className="material-icons">send</i>
                             </button>
                         </div>
